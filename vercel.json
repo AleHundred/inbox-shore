@@ -7,9 +7,7 @@
       "runtime": "@vercel/node"
     }
   },
-  "env": {
-    "JWT_SECRET": "@jwt-secret"
-  },
+
   "build": {
     "env": {
       "NEXT_PUBLIC_API_BASE_URL": "https://inbox-shore.vercel.app/api"
