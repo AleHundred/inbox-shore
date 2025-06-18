@@ -14,7 +14,11 @@ export async function GET(request: Request) {
   try {
     const user = authUser(request);
     if (!user) {
+<<<<<<< HEAD
       return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+=======
+      return NextResponse.json({ error: 'Unauthorized. Please log in.' }, { status: 401 });
+>>>>>>> origin/main
     }
 
     const url = new URL(request.url);
@@ -23,14 +27,22 @@ export async function GET(request: Request) {
 
     if (pageParam && isNaN(parseInt(pageParam))) {
       return NextResponse.json(
+<<<<<<< HEAD
         { success: false, error: 'Invalid page parameter: must be a number' },
+=======
+        { error: 'Invalid page parameter: must be a number' },
+>>>>>>> origin/main
         { status: 400 }
       );
     }
 
     if (limitParam && isNaN(parseInt(limitParam))) {
       return NextResponse.json(
+<<<<<<< HEAD
         { success: false, error: 'Invalid limit parameter: must be a number' },
+=======
+        { error: 'Invalid limit parameter: must be a number' },
+>>>>>>> origin/main
         { status: 400 }
       );
     }
@@ -39,6 +51,7 @@ export async function GET(request: Request) {
     const limit = parseInt(limitParam || '10');
 
     if (page < 1) {
+<<<<<<< HEAD
       return NextResponse.json(
         { success: false, error: 'Page number must be greater than 0' },
         { status: 400 }
@@ -50,6 +63,13 @@ export async function GET(request: Request) {
         { success: false, error: 'Limit must be between 1 and 100' },
         { status: 400 }
       );
+=======
+      return NextResponse.json({ error: 'Page number must be greater than 0' }, { status: 400 });
+    }
+
+    if (limit < 1 || limit > 100) {
+      return NextResponse.json({ error: 'Limit must be between 1 and 100' }, { status: 400 });
+>>>>>>> origin/main
     }
 
     const paginationParams: Record<string, string | number | undefined> = {
@@ -60,21 +80,33 @@ export async function GET(request: Request) {
     const requestsRes = await supportClient.get('/requests', paginationParams);
 
     if (requestsRes.error) {
+<<<<<<< HEAD
       return NextResponse.json(
         { success: false, error: requestsRes.error.message },
         { status: 500 }
       );
+=======
+      return NextResponse.json({ error: requestsRes.error.message }, { status: 500 });
+>>>>>>> origin/main
     }
 
     if (!requestsRes.data) {
       return NextResponse.json(
+<<<<<<< HEAD
         { success: false, error: 'Invalid response format from requests API' },
+=======
+        { error: 'Invalid response format from requests API' },
+>>>>>>> origin/main
         { status: 500 }
       );
     }
 
     return NextResponse.json(requestsRes.data, { status: 200 });
   } catch {
+<<<<<<< HEAD
     return NextResponse.json({ success: false, error: 'Internal server error' }, { status: 500 });
+=======
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+>>>>>>> origin/main
   }
 }

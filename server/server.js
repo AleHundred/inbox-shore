@@ -20,6 +20,7 @@ const app = express();
       messageCount: messages.length,
     });
 
+<<<<<<< HEAD
     const corsOptions = {
       origin: ['http://localhost:3000', 'https://inbox-shore.vercel.app/api', /\.vercel\.app$/],
       credentials: true,
@@ -28,6 +29,10 @@ const app = express();
 
     app.use(helmet());
     app.use(cors(corsOptions));
+=======
+    app.use(helmet());
+    app.use(cors());
+>>>>>>> origin/main
     app.use(bodyParser.json());
 
     app.use((req, res, next) => {

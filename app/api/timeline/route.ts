@@ -2,6 +2,11 @@ import { type NextRequest, NextResponse } from 'next/server';
 
 import { apiClient } from '@/lib/api/services/base/apiClient';
 import { TIMELINE_PAGE_SIZE } from '@/lib/constants';
+<<<<<<< HEAD
+=======
+import { handleApiError } from '@/lib/errors/adapters';
+import { ErrorCategory } from '@/lib/utils/AppError';
+>>>>>>> origin/main
 
 import { authUser } from '../auth/auth-helper';
 
@@ -59,11 +64,15 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         { status: 400 }
       );
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/main
     const page = searchParams.get('page');
     const limit = searchParams.get('limit');
 
     if (page && (isNaN(Number(page)) || Number(page) < 1)) {
+<<<<<<< HEAD
       return NextResponse.json(
         { success: false, error: 'Page number must be a positive number' },
         { status: 400 }
@@ -75,6 +84,23 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         { success: false, error: 'Limit must be a number between 1 and 100' },
         { status: 400 }
       );
+=======
+      const error = handleApiError(
+        new Error('Page number must be a positive number'),
+        'validating timeline parameters',
+        { metadata: { category: ErrorCategory.VALIDATION } }
+      );
+      return NextResponse.json(error, { status: 400 });
+    }
+
+    if (limit && (isNaN(Number(limit)) || Number(limit) < 1 || Number(limit) > 100)) {
+      const error = handleApiError(
+        new Error('Limit must be a number between 1 and 100'),
+        'validating timeline parameters',
+        { metadata: { category: ErrorCategory.VALIDATION } }
+      );
+      return NextResponse.json(error, { status: 400 });
+>>>>>>> origin/main
     }
 
     const pageNum = page && Number.isFinite(Number(page)) && Number(page) > 0 ? Number(page) : 1;
@@ -91,6 +117,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     });
 
     if (!response) {
+<<<<<<< HEAD
       return NextResponse.json(
         { success: false, error: 'No response received from timeline API' },
         { status: 500 }
@@ -102,6 +129,23 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         { success: false, error: 'Invalid response format from timeline API' },
         { status: 500 }
       );
+=======
+      const error = handleApiError(
+        new Error('No response received from timeline API'),
+        'fetching timeline data',
+        { metadata: { category: ErrorCategory.SERVER } }
+      );
+      return NextResponse.json(error, { status: 500 });
+    }
+
+    if (!response.request?.timelineEntries) {
+      const error = handleApiError(
+        new Error('Invalid response format from timeline API'),
+        'processing timeline response',
+        { metadata: { category: ErrorCategory.SERVER } }
+      );
+      return NextResponse.json(error, { status: 500 });
+>>>>>>> origin/main
     }
 
     const filteredItems = response.request.timelineEntries.items.filter((entry) => {

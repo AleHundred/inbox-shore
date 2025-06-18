@@ -46,9 +46,7 @@ export async function POST(request: Request) {
     }
 
     const { requestId, message } = body;
-
     const customer = await upsertCustomer(user);
-
     if (!customer) {
       return NextResponse.json(
         { success: false, error: 'Failed to create or retrieve customer record' },
@@ -63,23 +61,19 @@ export async function POST(request: Request) {
     };
 
     const result = await supportClient.post('/replies', replyData);
-
     if (result.error) {
       return NextResponse.json({ success: false, error: result.error.message }, { status: 500 });
     }
-
     if (!result.data) {
       return NextResponse.json(
         { success: false, error: 'No data returned from the API' },
         { status: 500 }
       );
     }
-
     interface ReplyResponse {
       chatId?: string;
       [key: string]: unknown;
     }
-
     const responseData = result.data as ReplyResponse;
     const chatId = responseData.chatId;
     if (!chatId) {
@@ -88,7 +82,6 @@ export async function POST(request: Request) {
         { status: 500 }
       );
     }
-
     return new Response(
       JSON.stringify({
         success: true,
