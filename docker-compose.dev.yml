@@ -1,0 +1,45 @@
+services:
+  frontend:
+    build:
+      context: .
+      target: deps
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - JWT_SECRET=${JWT_SECRET}
+      - NEXT_PUBLIC_API_BASE_URL=http://localhost:3000/api
+      - NEXT_PUBLIC_USE_MOCK_API=true
+      - NEXT_PUBLIC_API_URL=http://backend:3001
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    command: npm run dev:frontend
+    depends_on:
+      - backend
+    networks:
+      - inbox-shore
+
+  backend:
+    build: ./server
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+      - JWT_SECRET=${JWT_SECRET}
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+      - server_data:/app/data
+    command: npm run dev
+    networks:
+      - inbox-shore
+
+networks:
+  inbox-shore:
+    driver: bridge
+
+volumes:
+  server_data:

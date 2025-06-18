@@ -1,0 +1,39 @@
+# EditorConfig helps maintain consistent coding styles
+# across different editors and IDEs
+# editorconfig.org
+
+root = true
+
+[*]
+indent_style = space
+indent_size = 2
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+max_line_length = 100
+
+# Markdown files
+[*.md]
+trim_trailing_whitespace = false
+
+# JSON files - ensure consistent with Prettier
+[*.json]
+insert_final_newline = false
+
+# YAML files
+[*.{yml,yaml}]
+indent_size = 2
+
+# Shell scripts
+[*.sh]
+indent_style = space
+indent_size = 2
+
+# Windows files
+[*.bat]
+end_of_line = crlf
+
+# .env files
+[.env*]
+insert_final_newline = false

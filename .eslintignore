@@ -1,0 +1,17 @@
+# Next.js build output
+.next
+out
+
+# Dependencies
+node_modules
+
+# Build files
+build
+dist
+
+# Coverage directory
+coverage
+
+# TypeScript cache
+*.tsbuildinfo
+

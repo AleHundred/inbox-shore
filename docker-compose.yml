@@ -1,0 +1,29 @@
+services:
+  frontend:
+    build: .
+    ports:
+      - '3000:3000'
+    env_file:
+      - .env
+    depends_on:
+      - backend
+    networks:
+      - inbox-shore
+
+  backend:
+    build: ./server
+    ports:
+      - '3001:3001'
+    env_file:
+      - .env
+    volumes:
+      - server_data:/app/data
+    networks:
+      - inbox-shore
+
+networks:
+  inbox-shore:
+    driver: bridge
+
+volumes:
+  server_data:
