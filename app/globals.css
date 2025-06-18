@@ -1,0 +1,204 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 222 47% 11%;
+    --foreground: 214 32% 91%;
+    --card: 222 47% 11%;
+    --card-foreground: 213 31% 91%;
+    --popover: 222 47% 11%;
+    --popover-foreground: 215 20.2% 65.1%;
+    --primary: 222 47% 11%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 222 47% 11%;
+    --secondary-foreground: 222 47% 11%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 246 83% 66%;
+    --accent-foreground: 210 40% 98%;
+    --accent-dark: 255 69% 60%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 330 100% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
+    --radius: 0.5rem;
+  }
+}
+
+html,
+body {
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    system-ui,
+    sans-serif;
+  font-size: 16px;
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  /* Remove the padding-top */
+}
+
+/* Form Elements */
+input,
+textarea {
+  @apply bg-muted border-muted focus:border-accent focus:ring-accent/20;
+}
+
+/* Card Styling */
+.card {
+  @apply bg-card border-[#4a7dba]/30 shadow-lg;
+}
+
+/* Button Enhancements */
+.button-accent {
+  @apply bg-accent hover:bg-accent/90 text-white font-medium;
+}
+
+/* Navigation Refinements */
+.nav-item {
+  @apply flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-muted transition-colors;
+}
+
+/* Enhanced Navigation Styling */
+header h1 {
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: -0.02em;
+  background: linear-gradient(to right, hsl(var(--accent)), #9f86ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Message Timeline */
+.message-container {
+  @apply max-w-[85%] rounded-md shadow-sm;
+}
+
+.user-message {
+  @apply ml-auto bg-accent text-white rounded-br-sm;
+}
+
+.other-message {
+  @apply bg-muted text-foreground rounded-bl-sm;
+}
+
+/* Request container styling */
+.request-container {
+  @apply border border-border/5 rounded-md overflow-hidden bg-card;
+}
+
+/* Request list item */
+.request-item {
+  @apply border-b border-border/5 hover:bg-muted/20 transition-colors;
+}
+
+/* Enhance the textarea styling */
+textarea.request-reply {
+  @apply text-base p-3 min-h-28;
+}
+
+/* Make the send button more prominent */
+.send-button {
+  @apply px-6 py-3 text-base font-medium;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Subtle Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Request row hover effects */
+button[role='listitem']:hover {
+  border-left-color: var(--hover-color, transparent) !important;
+}
+
+div[role='option']:not([aria-selected='true']):hover {
+  border-left-color: var(--hover-color, transparent) !important;
+}
+
+.auth-transition {
+  transition:
+    opacity 0.3s ease-in-out,
+    transform 0.2s ease-in-out;
+}
+
+.auth-transition.loading {
+  opacity: 0.7;
+}
+
+/* Page transition improvements */
+.page-transition {
+  transition: opacity 0.2s ease-in-out;
+}
+
+.page-fade-enter {
+  opacity: 0;
+}
+
+.page-fade-enter-active {
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.page-fade-exit {
+  opacity: 1;
+}
+
+.page-fade-exit-active {
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.loading-fade {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.btn-transition {
+  transition: all 0.2s ease-in-out;
+}

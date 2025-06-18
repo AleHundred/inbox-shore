@@ -1,0 +1,222 @@
+[
+  {
+    "id": "ticket_1",
+    "subject": "Benigne tremo possimus aranea claro consuasor communis magni.",
+    "status": "open",
+    "priority": 1,
+    "createdAt": "2025-06-02T02:55:15.279Z",
+    "updatedAt": "2025-06-06T00:13:04.649Z",
+    "customerId": "31354538-7c0c-4d8c-8d9f-0c4cb7651763",
+    "preview": "Audax volva avarus caterva pecto."
+  },
+  {
+    "id": "ticket_2",
+    "subject": "Artificiose adicio blanditiis universe aegrotatio autem ultio.",
+    "status": "in_progress",
+    "priority": 4,
+    "createdAt": "2025-05-15T03:00:10.701Z",
+    "updatedAt": "2025-05-26T05:10:27.983Z",
+    "customerId": "a84536d6-c7d6-436e-8894-72312b68b149",
+    "preview": "Coniecto tenetur video acidus cotidie autus aer."
+  },
+  {
+    "id": "ticket_3",
+    "subject": "Ceno clibanus vis alias eum.",
+    "status": "resolved",
+    "priority": 2,
+    "createdAt": "2025-05-28T21:39:40.177Z",
+    "updatedAt": "2025-06-03T23:42:34.096Z",
+    "customerId": "1c6651e4-1fdf-4f61-84f9-32a39ee1c58b",
+    "preview": "Vorax cursus convoco vulgus tergeo."
+  },
+  {
+    "id": "ticket_4",
+    "subject": "Comprehendo voro claro aliquam recusandae ars virgo.",
+    "status": "pending",
+    "priority": 2,
+    "createdAt": "2025-06-11T15:25:47.622Z",
+    "updatedAt": "2025-06-12T03:23:20.026Z",
+    "customerId": "f8dda1c9-3eae-4c2c-9318-122d14c71f55",
+    "preview": "Absque tutamen angustus."
+  },
+  {
+    "id": "ticket_5",
+    "subject": "Absum quaerat aqua nostrum vos aggredior.",
+    "status": "in_progress",
+    "priority": 4,
+    "createdAt": "2025-06-13T04:01:37.858Z",
+    "updatedAt": "2025-06-13T16:20:25.261Z",
+    "customerId": "31354538-7c0c-4d8c-8d9f-0c4cb7651763",
+    "preview": "Placeat tondeo defero."
+  },
+  {
+    "id": "ticket_6",
+    "subject": "Absconditus depromo cariosus constans explicabo adhaero porro strues.",
+    "status": "resolved",
+    "priority": 2,
+    "createdAt": "2025-05-24T04:32:26.851Z",
+    "updatedAt": "2025-06-07T07:30:43.782Z",
+    "customerId": "31354538-7c0c-4d8c-8d9f-0c4cb7651763",
+    "preview": "Solutio dolor."
+  },
+  {
+    "id": "ticket_7",
+    "subject": "Somniculosus clam ciminatio stabilis eaque caste.",
+    "status": "open",
+    "priority": 0,
+    "createdAt": "2025-05-22T21:40:18.914Z",
+    "updatedAt": "2025-05-26T23:30:14.842Z",
+    "customerId": "a84536d6-c7d6-436e-8894-72312b68b149",
+    "preview": "Caveo acsi uredo urbs."
+  },
+  {
+    "id": "ticket_8",
+    "subject": "Suffoco ascit defungo decor theologus decumbo crepusculum sunt tergeo vinum.",
+    "status": "in_progress",
+    "priority": 1,
+    "createdAt": "2025-05-25T21:10:08.174Z",
+    "updatedAt": "2025-06-12T14:39:06.626Z",
+    "customerId": "31354538-7c0c-4d8c-8d9f-0c4cb7651763",
+    "preview": "Praesentium taceo."
+  },
+  {
+    "id": "ticket_9",
+    "subject": "Ocer degusto occaecati tabernus minima.",
+    "status": "open",
+    "priority": 0,
+    "createdAt": "2025-05-30T05:28:37.105Z",
+    "updatedAt": "2025-06-06T06:42:58.638Z",
+    "customerId": "f8dda1c9-3eae-4c2c-9318-122d14c71f55",
+    "preview": "Velum nulla compono aegrotatio maiores."
+  },
+  {
+    "id": "ticket_10",
+    "subject": "Subseco degenero audentia inflammatio abstergo.",
+    "status": "pending",
+    "priority": 4,
+    "createdAt": "2025-05-22T05:39:17.552Z",
+    "updatedAt": "2025-06-11T17:05:27.893Z",
+    "customerId": "31354538-7c0c-4d8c-8d9f-0c4cb7651763",
+    "preview": "Suppono tamen totam bellum copiose repudiandae."
+  },
+  {
+    "id": "ticket_11",
+    "subject": "Blanditiis contego torrens pax expedita officiis alienus.",
+    "status": "in_progress",
+    "priority": 0,
+    "createdAt": "2025-05-23T07:37:07.045Z",
+    "updatedAt": "2025-06-07T04:25:42.145Z",
+    "customerId": "a84536d6-c7d6-436e-8894-72312b68b149",
+    "preview": "Autem subiungo accusator auditor causa toties."
+  },
+  {
+    "id": "ticket_12",
+    "subject": "Amissio conservo beatae cicuta sequi stips tantillus argumentum.",
+    "status": "resolved",
+    "priority": 4,
+    "createdAt": "2025-05-20T08:29:55.883Z",
+    "updatedAt": "2025-06-10T12:26:02.715Z",
+    "customerId": "1c6651e4-1fdf-4f61-84f9-32a39ee1c58b",
+    "preview": "Qui vomer volva strues crepusculum consequatur."
+  },
+  {
+    "id": "ticket_13",
+    "subject": "Denego cur curis arca cornu paens eveniet abundans suscipit.",
+    "status": "resolved",
+    "priority": 0,
+    "createdAt": "2025-05-21T15:30:24.462Z",
+    "updatedAt": "2025-05-26T01:26:50.511Z",
+    "customerId": "f8dda1c9-3eae-4c2c-9318-122d14c71f55",
+    "preview": "Conduco voco textus condico stultus cernuus conitor."
+  },
+  {
+    "id": "ticket_14",
+    "subject": "Totidem turba aureus acidus sophismata avaritia.",
+    "status": "resolved",
+    "priority": 2,
+    "createdAt": "2025-05-25T08:49:45.034Z",
+    "updatedAt": "2025-05-27T12:27:30.435Z",
+    "customerId": "1c6651e4-1fdf-4f61-84f9-32a39ee1c58b",
+    "preview": "Virgo aperte odit cruentus abeo."
+  },
+  {
+    "id": "ticket_15",
+    "subject": "Accusantium clibanus asperiores aeneus suadeo rerum sursum.",
+    "status": "in_progress",
+    "priority": 4,
+    "createdAt": "2025-05-22T10:39:35.174Z",
+    "updatedAt": "2025-06-10T01:43:24.502Z",
+    "customerId": "f8dda1c9-3eae-4c2c-9318-122d14c71f55",
+    "preview": "Trans ad non commemoro causa cunabula aliqua."
+  },
+  {
+    "id": "ticket_16",
+    "subject": "Vulgo conor corrupti accusator taceo surculus vulticulus.",
+    "status": "pending",
+    "priority": 2,
+    "createdAt": "2025-05-19T22:57:49.054Z",
+    "updatedAt": "2025-05-24T04:02:08.142Z",
+    "customerId": "0bb09db4-2efa-4c55-8483-b0287d3107c4",
+    "preview": "Conturbo arx acidus aperte."
+  },
+  {
+    "id": "ticket_17",
+    "subject": "Audentia creta culpo vespillo cruciamentum.",
+    "status": "in_progress",
+    "priority": 0,
+    "createdAt": "2025-06-01T15:02:34.504Z",
+    "updatedAt": "2025-06-05T21:40:04.291Z",
+    "customerId": "1c6651e4-1fdf-4f61-84f9-32a39ee1c58b",
+    "preview": "Ante recusandae coepi stips illo xiphias suspendo."
+  },
+  {
+    "id": "ticket_18",
+    "subject": "Tui omnis agnosco decretum ventito.",
+    "status": "in_progress",
+    "priority": 4,
+    "createdAt": "2025-05-16T16:07:40.332Z",
+    "updatedAt": "2025-06-02T01:18:57.930Z",
+    "customerId": "31354538-7c0c-4d8c-8d9f-0c4cb7651763",
+    "preview": "Claustrum volup mollitia spes."
+  },
+  {
+    "id": "ticket_19",
+    "subject": "Dedecor umerus clam umquam thermae provident universe.",
+    "status": "pending",
+    "priority": 2,
+    "createdAt": "2025-05-30T00:26:04.436Z",
+    "updatedAt": "2025-06-11T05:15:52.131Z",
+    "customerId": "0bb09db4-2efa-4c55-8483-b0287d3107c4",
+    "preview": "Tum stips bestia tutamen sublime aeternus acceptus."
+  },
+  {
+    "id": "ticket_20",
+    "subject": "Carus claustrum cultura ater compono usitas cogito debilito.",
+    "status": "pending",
+    "priority": 0,
+    "createdAt": "2025-05-16T05:05:54.497Z",
+    "updatedAt": "2025-05-27T18:46:38.333Z",
+    "customerId": "1c6651e4-1fdf-4f61-84f9-32a39ee1c58b",
+    "preview": "Thesis comparo dolorem coniecto cilicium vomica."
+  },
+  {
+    "id": "ticket_21",
+    "subject": "Caterva agnitio in itaque velit usus quae arca.",
+    "status": "pending",
+    "priority": 1,
+    "createdAt": "2025-05-31T19:59:38.987Z",
+    "updatedAt": "2025-06-04T23:32:58.444Z",
+    "customerId": "31354538-7c0c-4d8c-8d9f-0c4cb7651763",
+    "preview": "Averto non."
+  },
+  {
+    "id": "ticket_22",
+    "subject": "Benigne trado vulgaris voveo nam adulescens.",
+    "status": "open",
+    "priority": 2,
+    "createdAt": "2025-06-09T03:56:34.466Z",
+    "updatedAt": "2025-06-11T00:59:09.128Z",
+    "customerId": "0bb09db4-2efa-4c55-8483-b0287d3107c4",
+    "preview": "Dolore antiquus consequuntur animi."
+  }
+]

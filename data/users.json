@@ -1,0 +1,20 @@
+[
+  {
+    "id": "user_1",
+    "name": "Lucy Dacus",
+    "email": "lucy.dacus@boygenius.music",
+    "passwordHash": "$2a$10$gFBvzWKMFVCZsfIRZZ0x.OY7vRsKJVH9Kw/wGTwF7TE96CxOB9lQ2"
+  },
+  {
+    "id": "user_2",
+    "name": "Julien Baker",
+    "email": "julien.baker@boygenius.music",
+    "passwordHash": "$2a$10$iwWtizcsUke41BfrkwTMV.Mpfvyoq6xBRDlgi8VCneu22.DWGKFQW"
+  },
+  {
+    "id": "user_3",
+    "name": "Phoebe Bridgers",
+    "email": "phoebe.bridgers@boygenius.music",
+    "passwordHash": "$2a$10$rhjAH9r5gJK3hjclc8d0gOgp5oCyLQq4iMckNwfVmwOm9juiayhli"
+  }
+]

@@ -1,0 +1,368 @@
+openapi: 3.0.0
+info:
+  title: Inbox Shore API
+  description: API documentation for Inbox Shore application
+  version: 1.0.0
+  contact:
+    name: API Support
+    url: https://github.com/AleHundred/inbox-shore-git
+servers:
+  - url: http://localhost:3001/api
+    description: Development server
+
+tags:
+  - name: Auth
+    description: Authentication endpoints
+  - name: Users
+    description: User management endpoints
+  - name: Tickets
+    description: Ticket management endpoints
+  - name: Customers
+    description: Customer management endpoints
+  - name: Health
+    description: Health check endpoints
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: string
+          example: Error message
+    LoginRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          example: user@example.com
+        password:
+          type: string
+          format: password
+          example: yourpassword
+    LoginResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        token:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          example: user123
+        name:
+          type: string
+          example: John Doe
+        email:
+          type: string
+          format: email
+          example: john@example.com
+    Ticket:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ticket123
+        subject:
+          type: string
+          example: Need help with login
+        status:
+          type: string
+          example: open
+        customerEmail:
+          type: string
+          format: email
+          example: customer@example.com
+        createdAt:
+          type: string
+          format: date-time
+    Customer:
+      type: object
+      properties:
+        id:
+          type: string
+          example: cust123
+        name:
+          type: string
+          example: Jane Smith
+        email:
+          type: string
+          format: email
+          example: jane@example.com
+    HealthCheck:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        status:
+          type: string
+          example: healthy
+        timestamp:
+          type: string
+          format: date-time
+
+paths:
+  /login:
+    post:
+      tags: [Auth]
+      summary: Authenticate a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Authentication successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Too many login attempts
+
+  /users:
+    get:
+      tags: [Users]
+      summary: Get all users
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  users:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+                  count:
+                    type: integer
+                    example: 5
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+    
+  /users/{id}:
+    get:
+      tags: [Users]
+      summary: Get a user by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: User ID
+      responses:
+        '200':
+          description: User data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  id:
+                    type: string
+                    example: user123
+                  name:
+                    type: string
+                    example: John Doe
+                  email:
+                    type: string
+                    format: email
+                    example: john@example.com
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /requests:
+    get:
+      tags: [Tickets]
+      summary: Get all tickets
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: List of tickets
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  tickets:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Ticket'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /timeline:
+    get:
+      tags: [Tickets]
+      summary: Get ticket timeline/details
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: ticketId
+          required: true
+          schema:
+            type: string
+          description: ID of the ticket to get details for
+      responses:
+        '200':
+          description: Ticket timeline data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+        '400':
+          description: Missing ticketId parameter
+        '404':
+          description: Ticket not found
+          
+  /reply:
+    post:
+      tags: [Tickets]
+      summary: Send a reply to a ticket
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - ticketId
+                - message
+              properties:
+                ticketId:
+                  type: string
+                message:
+                  type: string
+      responses:
+        '200':
+          description: Reply sent successfully
+        '400':
+          description: Missing required fields
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          description: Ticket not found
+
+  /contact-form:
+    post:
+      tags: [Tickets]
+      summary: Create a new support ticket
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - subject
+                - message
+                - customerEmail
+              properties:
+                subject:
+                  type: string
+                message:
+                  type: string
+                customerEmail:
+                  type: string
+                  format: email
+                customerName:
+                  type: string
+      responses:
+        '201':
+          description: Ticket created successfully
+        '400':
+          description: Missing required fields
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /customer:
+    post:
+      tags: [Customers]
+      summary: Create or update a customer
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+              properties:
+                email:
+                  type: string
+                  format: email
+                name:
+                  type: string
+      responses:
+        '200':
+          description: Customer created/updated successfully
+        '400':
+          description: Missing required fields
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /health:
+    get:
+      tags: [Health]
+      summary: Health check endpoint
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthCheck'

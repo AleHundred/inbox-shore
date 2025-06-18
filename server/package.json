@@ -1,0 +1,47 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "server.js",
+  "type": "module",
+  "description": "Express.js API server for InboxShore customer support portal with JWT authentication and real-time messaging",
+  "keywords": [
+    "express",
+    "api",
+    "server",
+    "jwt",
+    "authentication",
+    "customer-support",
+    "backend",
+    "rest-api",
+    "node",
+    "winston",
+    "rate-limiting",
+    "middleware"
+  ],
+  "author": "Alejandra Villa Alvarez (hola@alejandra.dev)",
+  "license": "ISC",
+  "scripts": {
+    "build": "echo 'No build step required for pure JavaScript server'",
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "prod": "NODE_ENV=production node server.js"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^9.8.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "uuid": "^11.1.0",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
