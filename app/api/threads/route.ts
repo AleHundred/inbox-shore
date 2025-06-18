@@ -1,8 +1,6 @@
 import { NextResponse } from 'next/server';
 
 import { supportClient } from '@/lib/api/services/supportClient';
-import { handleApiError } from '@/lib/errors/adapters';
-import { ErrorCategory } from '@/lib/utils/AppError';
 
 import { authUser } from '../auth/auth-helper';
 
@@ -16,9 +14,7 @@ export async function GET(request: Request) {
   try {
     const user = authUser(request);
     if (!user) {
-      return handleApiError(new Error('Unauthorized'), 'threads authorization', {
-        metadata: { category: ErrorCategory.AUTH },
-      });
+      return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
     }
 
     const url = new URL(request.url);
@@ -26,18 +22,16 @@ export async function GET(request: Request) {
     const limitParam = url.searchParams.get('limit');
 
     if (pageParam && isNaN(parseInt(pageParam))) {
-      return handleApiError(
-        new Error('Invalid page parameter: must be a number'),
-        'validating pagination parameters',
-        { metadata: { category: ErrorCategory.VALIDATION } }
+      return NextResponse.json(
+        { success: false, error: 'Invalid page parameter: must be a number' },
+        { status: 400 }
       );
     }
 
     if (limitParam && isNaN(parseInt(limitParam))) {
-      return handleApiError(
-        new Error('Invalid limit parameter: must be a number'),
-        'validating pagination parameters',
-        { metadata: { category: ErrorCategory.VALIDATION } }
+      return NextResponse.json(
+        { success: false, error: 'Invalid limit parameter: must be a number' },
+        { status: 400 }
       );
     }
 
@@ -45,18 +39,16 @@ export async function GET(request: Request) {
     const limit = parseInt(limitParam || '10');
 
     if (page < 1) {
-      return handleApiError(
-        new Error('Page number must be greater than 0'),
-        'validating pagination parameters',
-        { metadata: { category: ErrorCategory.VALIDATION } }
+      return NextResponse.json(
+        { success: false, error: 'Page number must be greater than 0' },
+        { status: 400 }
       );
     }
 
     if (limit < 1 || limit > 100) {
-      return handleApiError(
-        new Error('Limit must be between 1 and 100'),
-        'validating pagination parameters',
-        { metadata: { category: ErrorCategory.VALIDATION } }
+      return NextResponse.json(
+        { success: false, error: 'Limit must be between 1 and 100' },
+        { status: 400 }
       );
     }
 
@@ -68,23 +60,21 @@ export async function GET(request: Request) {
     const requestsRes = await supportClient.get('/requests', paginationParams);
 
     if (requestsRes.error) {
-      return handleApiError(requestsRes.error, 'fetching requests', {
-        metadata: { category: ErrorCategory.SERVER },
-      });
+      return NextResponse.json(
+        { success: false, error: requestsRes.error.message },
+        { status: 500 }
+      );
     }
 
     if (!requestsRes.data) {
-      return handleApiError(
-        new Error('Invalid response format from requests API'),
-        'processing requests response',
-        { metadata: { category: ErrorCategory.SERVER } }
+      return NextResponse.json(
+        { success: false, error: 'Invalid response format from requests API' },
+        { status: 500 }
       );
     }
 
     return NextResponse.json(requestsRes.data, { status: 200 });
-  } catch (error) {
-    return handleApiError(error, 'processing threads request', {
-      metadata: { category: ErrorCategory.SERVER },
-    });
+  } catch {
+    return NextResponse.json({ success: false, error: 'Internal server error' }, { status: 500 });
   }
 }

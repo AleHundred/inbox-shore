@@ -2,8 +2,6 @@ import { type NextRequest, NextResponse } from 'next/server';
 
 import { apiClient } from '@/lib/api/services/base/apiClient';
 import { TIMELINE_PAGE_SIZE } from '@/lib/constants';
-import { handleApiError } from '@/lib/errors/adapters';
-import { ErrorCategory } from '@/lib/utils/AppError';
 
 import { authUser } from '../auth/auth-helper';
 
@@ -46,45 +44,37 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     const user = authUser(request);
     if (!user) {
-      const error = handleApiError(
-        new Error('Unauthorized. Please log in.'),
-        'timeline authorization',
-        { metadata: { category: ErrorCategory.AUTH } }
+      return NextResponse.json(
+        { success: false, error: 'Unauthorized. Please log in.' },
+        { status: 401 }
       );
-      return NextResponse.json(error, { status: 401 });
     }
 
     const searchParams = request.nextUrl.searchParams;
     const requestId = searchParams.get('requestId');
 
     if (!requestId) {
-      const error = handleApiError(
-        new Error('Request ID is required'),
-        'validating timeline parameters',
-        { metadata: { category: ErrorCategory.VALIDATION } }
+      return NextResponse.json(
+        { success: false, error: 'Request ID is required' },
+        { status: 400 }
       );
-      return NextResponse.json(error, { status: 400 });
     }
 
     const page = searchParams.get('page');
     const limit = searchParams.get('limit');
 
     if (page && (isNaN(Number(page)) || Number(page) < 1)) {
-      const error = handleApiError(
-        new Error('Page number must be a positive number'),
-        'validating timeline parameters',
-        { metadata: { category: ErrorCategory.VALIDATION } }
+      return NextResponse.json(
+        { success: false, error: 'Page number must be a positive number' },
+        { status: 400 }
       );
-      return NextResponse.json(error, { status: 400 });
     }
 
     if (limit && (isNaN(Number(limit)) || Number(limit) < 1 || Number(limit) > 100)) {
-      const error = handleApiError(
-        new Error('Limit must be a number between 1 and 100'),
-        'validating timeline parameters',
-        { metadata: { category: ErrorCategory.VALIDATION } }
+      return NextResponse.json(
+        { success: false, error: 'Limit must be a number between 1 and 100' },
+        { status: 400 }
       );
-      return NextResponse.json(error, { status: 400 });
     }
 
     const pageNum = page && Number.isFinite(Number(page)) && Number(page) > 0 ? Number(page) : 1;
@@ -101,21 +91,17 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     });
 
     if (!response) {
-      const error = handleApiError(
-        new Error('No response received from timeline API'),
-        'fetching timeline data',
-        { metadata: { category: ErrorCategory.SERVER } }
+      return NextResponse.json(
+        { success: false, error: 'No response received from timeline API' },
+        { status: 500 }
       );
-      return NextResponse.json(error, { status: 500 });
     }
 
     if (!response.request?.timelineEntries) {
-      const error = handleApiError(
-        new Error('Invalid response format from timeline API'),
-        'processing timeline response',
-        { metadata: { category: ErrorCategory.SERVER } }
+      return NextResponse.json(
+        { success: false, error: 'Invalid response format from timeline API' },
+        { status: 500 }
       );
-      return NextResponse.json(error, { status: 500 });
     }
 
     const filteredItems = response.request.timelineEntries.items.filter((entry) => {
@@ -136,10 +122,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     };
 
     return NextResponse.json(result);
-  } catch (error) {
-    const handledError = handleApiError(error, 'processing timeline request', {
-      metadata: { category: ErrorCategory.SERVER },
-    });
-    return NextResponse.json(handledError, { status: 500 });
+  } catch {
+    return NextResponse.json({ success: false, error: 'Internal server error' }, { status: 500 });
   }
 }

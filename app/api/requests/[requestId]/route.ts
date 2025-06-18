@@ -1,9 +1,7 @@
 import { NextResponse } from 'next/server';
 
 import { getMockRequestDetail } from '@/lib/api/mockData/requests';
-import { handleApiError } from '@/lib/errors/adapters';
 import { messageStore } from '@/lib/store/messageStore';
-import { ErrorCategory } from '@/lib/utils/AppError';
 
 /**
  * Handles GET requests for retrieving request details and associated messages
@@ -82,9 +80,7 @@ export async function GET(_request: Request, { params }: { params: { requestId: 
       },
       { status: 404 }
     );
-  } catch (error) {
-    return handleApiError(error, 'processing request detail', {
-      metadata: { category: ErrorCategory.SERVER },
-    });
+  } catch {
+    return NextResponse.json({ success: false, error: 'Internal server error' }, { status: 500 });
   }
 }

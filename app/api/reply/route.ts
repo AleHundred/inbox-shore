@@ -1,6 +1,6 @@
+import { NextResponse } from 'next/server';
+
 import { supportClient } from '@/lib/api/services/supportClient';
-import { handleApiError } from '@/lib/errors/adapters';
-import { ErrorCategory } from '@/lib/utils/AppError';
 
 import { authUser } from '../auth/auth-helper';
 import { upsertCustomer } from '../upsertCustomer';
@@ -15,36 +15,34 @@ export async function POST(request: Request) {
   try {
     const user = authUser(request);
     if (!user) {
-      return handleApiError(new Error('Authentication required'), 'reply authorization', {
-        metadata: { category: ErrorCategory.AUTH },
-      });
+      return NextResponse.json(
+        { success: false, error: 'Authentication required' },
+        { status: 401 }
+      );
     }
 
     let body;
     try {
       body = await request.json();
     } catch {
-      return handleApiError(
-        new Error('Invalid request body: unable to parse JSON'),
-        'parsing reply request',
-        { metadata: { category: ErrorCategory.VALIDATION } }
+      return NextResponse.json(
+        { success: false, error: 'Invalid request body: unable to parse JSON' },
+        { status: 400 }
       );
     }
 
     if (!body.requestId && !body.message) {
-      return handleApiError(
-        new Error('Request ID and message are required'),
-        'validating reply fields',
-        { metadata: { category: ErrorCategory.VALIDATION } }
+      return NextResponse.json(
+        { success: false, error: 'Request ID and message are required' },
+        { status: 400 }
       );
     } else if (!body.requestId) {
-      return handleApiError(new Error('Request ID is required'), 'validating reply fields', {
-        metadata: { category: ErrorCategory.VALIDATION },
-      });
+      return NextResponse.json(
+        { success: false, error: 'Request ID is required' },
+        { status: 400 }
+      );
     } else if (!body.message) {
-      return handleApiError(new Error('Message is required'), 'validating reply fields', {
-        metadata: { category: ErrorCategory.VALIDATION },
-      });
+      return NextResponse.json({ success: false, error: 'Message is required' }, { status: 400 });
     }
 
     const { requestId, message } = body;
@@ -52,10 +50,9 @@ export async function POST(request: Request) {
     const customer = await upsertCustomer(user);
 
     if (!customer) {
-      return handleApiError(
-        new Error('Failed to create or retrieve customer record'),
-        'preparing customer for reply',
-        { metadata: { category: ErrorCategory.SERVER } }
+      return NextResponse.json(
+        { success: false, error: 'Failed to create or retrieve customer record' },
+        { status: 500 }
       );
     }
 
@@ -68,15 +65,14 @@ export async function POST(request: Request) {
     const result = await supportClient.post('/replies', replyData);
 
     if (result.error) {
-      return handleApiError(result.error, 'sending chat message to the API', {
-        metadata: { category: ErrorCategory.SERVER },
-      });
+      return NextResponse.json({ success: false, error: result.error.message }, { status: 500 });
     }
 
     if (!result.data) {
-      return handleApiError(new Error('No data returned from the API'), 'processing API response', {
-        metadata: { category: ErrorCategory.SERVER },
-      });
+      return NextResponse.json(
+        { success: false, error: 'No data returned from the API' },
+        { status: 500 }
+      );
     }
 
     interface ReplyResponse {
@@ -87,9 +83,10 @@ export async function POST(request: Request) {
     const responseData = result.data as ReplyResponse;
     const chatId = responseData.chatId;
     if (!chatId) {
-      return handleApiError(new Error('No chat ID returned from the API'), 'extracting chat ID', {
-        metadata: { category: ErrorCategory.SERVER },
-      });
+      return NextResponse.json(
+        { success: false, error: 'No chat ID returned from the API' },
+        { status: 500 }
+      );
     }
 
     return new Response(
@@ -107,8 +104,6 @@ export async function POST(request: Request) {
       { status: 200, headers: { 'Content-Type': 'application/json' } }
     );
   } catch (error) {
-    return handleApiError(error, 'processing reply request', {
-      metadata: { category: ErrorCategory.SERVER },
-    });
+    return NextResponse.json({ success: false, error: 'Internal server error' }, { status: 500 });
   }
 }
