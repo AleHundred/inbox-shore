@@ -7,14 +7,12 @@ import type {
   RequestCreateResponse,
   RequestDetailResponse,
   RequestsResponse,
-  RequestSummary,
-  Request,
 } from '@/lib/types/api';
 import type { ReplyResponse } from '@/lib/types/request';
 import { ErrorCategory } from '@/lib/utils/AppError';
 import { logDebug } from '@/lib/utils/errorLogger';
 import { normalizePaginationParams } from '@/lib/utils/paginationUtils';
-import { hasLegacyPagination, isArrayLike } from '@/lib/utils/typeGuards';
+import { hasLegacyPagination, isArrayLike, ensureRequestSummary } from '@/lib/utils/typeGuards';
 
 import { apiClient } from './base/apiClient';
 
@@ -147,6 +145,14 @@ export const requestService = {
 
       const tickets = response.tickets || response.data;
 
+      if (isArrayLike(response.data)) {
+        const filteredData = response.data.map((item) => ensureRequestSummary(item));
+        response.data = filteredData;
+      }
+
+      // Ensure tickets is properly typed
+      const typedTickets = tickets ? tickets.map((item) => ensureRequestSummary(item)) : undefined;
+
       logDebug('RequestService', 'Received requests response', {
         ticketCount: tickets?.length || 0,
         success: response.success,
@@ -166,20 +172,19 @@ export const requestService = {
         responseStructure: response.tickets ? 'external' : 'mock',
       });
 
-      if (!isArrayLike(tickets)) {
+      if (!isArrayLike(typedTickets)) {
         const customerDataMap: Record<string, CustomerData> = {};
 
         if (isArrayLike(response.data)) {
-          response.data.forEach((item: RequestSummary | Request) => {
-            const customer = item.customer;
-            if (customer?.id) {
-              customerDataMap[customer.id] = {
-                id: customer.id,
-                fullName:
-                  'fullName' in customer && customer.fullName ? customer.fullName : 'Unknown',
+          response.data.forEach((item) => {
+            const summary = ensureRequestSummary(item);
+            if (summary.customer.id) {
+              customerDataMap[summary.customer.id] = {
+                id: summary.customer.id,
+                fullName: summary.customer.fullName,
                 email:
-                  'email' in customer && customer.email
-                    ? String(customer.email)
+                  'email' in item.customer && item.customer.email
+                    ? String(item.customer.email)
                     : 'no-email@example.com',
               };
             }
@@ -200,24 +205,7 @@ export const requestService = {
             data: {
               success: true,
               tickets: isArrayLike(response.data)
-                ? response.data.map((item: RequestSummary | Request) => {
-                    if (!item.customer?.id) {
-                      return {
-                        ...item,
-                        customer: { id: 'unknown', fullName: 'Unknown' },
-                      };
-                    }
-                    return {
-                      ...item,
-                      customer: {
-                        id: item.customer.id,
-                        fullName:
-                          'fullName' in item.customer && item.customer.fullName
-                            ? item.customer.fullName
-                            : 'Unknown',
-                      },
-                    };
-                  })
+                ? response.data.map((item) => ensureRequestSummary(item))
                 : [],
               customerDataMap,
               pagination: {
