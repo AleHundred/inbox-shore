@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
 
-import { getMockRequests } from '@/lib/api/mockData/requests';
-import { messageStore } from '@/lib/store/messageStore';
-import type { RequestSummary, DateTimeParts } from '@/lib/types/api';
+import type { DateTimeParts, RequestSummary } from '@/lib/types/api';
 
+import { getMockRequests } from '../../../lib/api/mockData/requests';
+import { messageStore } from '../../../lib/store/messageStore';
 import { authUser } from '../auth/auth-helper';
 
 /**
