@@ -1,1 +1,1 @@
-export { useAuth } from '@/lib/contexts/AuthContext';
+export { useAuth } from '@/lib/contexts/AuthContext.simple';
