@@ -131,8 +131,8 @@ This separation allows your frontend to benefit from Vercel's global CDN while y
 **🚀 Production URLs:**
 
 - **Frontend:** https://inbox-shore-git-deployment-alejandra-villas-projects-05dd66da.vercel.app
-- **Backend API:** https://inbox-shore-production.up.railway.app
-- **API Health Check:** https://inbox-shore-production.up.railway.app/api/health
+- **Backend API:** https://inbox-shore-backend-production.up.railway.app/api
+- **API Health Check:** https://inbox-shore-backend-production.up.railway.app/api/api/health
 
 ### Deploying Your Own Instance
 
@@ -154,7 +154,7 @@ Railway deployment handles your Express server and provides the API endpoints yo
    PORT=3001
    ```
 3. Railway automatically builds and deploys your server from the `/server` directory
-4. Note your Railway app URL (format: `https://your-app.railway.app`)
+4. Note your Railway app URL (format: `https://inbox-shore-backend-production.up.railway.app/api`)
 
 #### Step 2: Deploy Frontend to Vercel
 
@@ -164,7 +164,7 @@ Vercel handles your Next.js frontend and API routes, connecting to your Railway 
 2. Configure environment variables in Vercel dashboard:
    ```
    JWT_SECRET=same-secret-as-railway
-   NEXT_PUBLIC_API_URL=https://your-railway-app.railway.app
+   NEXT_PUBLIC_API_URL=https://inbox-shore-backend-production.up.railway.app/api
    NEXT_PUBLIC_USE_MOCK_API=false
    NEXT_PUBLIC_API_BASE_URL=https://your-vercel-app.vercel.app/api
    ```
