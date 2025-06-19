@@ -1,10 +1,8 @@
 import { NextResponse } from 'next/server';
 
 import { getMockRequests } from '@/lib/api/mockData/requests';
-import { handleApiError } from '@/lib/errors/adapters';
 import { messageStore } from '@/lib/store/messageStore';
 import type { RequestSummary, DateTimeParts } from '@/lib/types/api';
-import { ErrorCategory } from '@/lib/utils/AppError';
 
 import { authUser } from '../auth/auth-helper';
 
@@ -111,10 +109,8 @@ export async function GET(request: Request) {
     };
 
     return NextResponse.json(response);
-  } catch (error) {
-    return handleApiError(error, 'processing requests list', {
-      metadata: { category: ErrorCategory.SERVER },
-    });
+  } catch {
+    return NextResponse.json({ success: false, error: 'Internal server error' }, { status: 500 });
   }
 }
 
@@ -127,10 +123,9 @@ export async function POST(request: Request) {
   try {
     const user = authUser(request);
     if (!user) {
-      return handleApiError(
-        new Error('Authentication required'),
-        'request creation authorization',
-        { metadata: { category: ErrorCategory.AUTH } }
+      return NextResponse.json(
+        { success: false, error: 'Authentication required' },
+        { status: 401 }
       );
     }
 
@@ -138,18 +133,16 @@ export async function POST(request: Request) {
     try {
       body = await request.json();
     } catch {
-      return handleApiError(
-        new Error('Invalid request body: unable to parse JSON'),
-        'parsing request creation request',
-        { metadata: { category: ErrorCategory.VALIDATION } }
+      return NextResponse.json(
+        { success: false, error: 'Invalid request body: unable to parse JSON' },
+        { status: 400 }
       );
     }
 
     if (!body.title || !body.message) {
-      return handleApiError(
-        new Error('Title and message are required'),
-        'validating request creation fields',
-        { metadata: { category: ErrorCategory.VALIDATION } }
+      return NextResponse.json(
+        { success: false, error: 'Title and message are required' },
+        { status: 400 }
       );
     }
 
@@ -163,9 +156,7 @@ export async function POST(request: Request) {
     };
 
     return NextResponse.json(response);
-  } catch (error) {
-    return handleApiError(error, 'request creation', {
-      metadata: { category: ErrorCategory.SERVER },
-    });
+  } catch {
+    return NextResponse.json({ success: false, error: 'Internal server error' }, { status: 500 });
   }
 }
