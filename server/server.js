@@ -21,7 +21,11 @@ const app = express();
     });
 
     const corsOptions = {
-      origin: ['http://localhost:3000', 'https://inbox-shore.vercel.app/api', /\.vercel\.app$/],
+      origin: [
+        'http://localhost:3000',
+        /\.railway\.app$/,
+        process.env.RAILWAY_PUBLIC_DOMAIN,
+      ].filter(Boolean),
       credentials: true,
       optionsSuccessStatus: 200,
     };

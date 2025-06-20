@@ -4,8 +4,12 @@ const require = createRequire(import.meta.url);
 
 const env = {
   JWT_SECRET: process.env.JWT_SECRET,
-  NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL,
-  NEXT_PUBLIC_USE_MOCK_API: process.env.NEXT_PUBLIC_USE_MOCK_API,
+  NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL || '/api',
+  NEXT_PUBLIC_USE_MOCK_API: process.env.NEXT_PUBLIC_USE_MOCK_API || 'false',
+  NEXT_PUBLIC_API_URL:
+    process.env.NEXT_PUBLIC_API_URL ||
+    process.env.RAILWAY_PRIVATE_DOMAIN ||
+    'http://localhost:3001',
 };
 
 /** @type {import('next').NextConfig} */
