@@ -4,9 +4,9 @@ A modern, full-stack customer support portal. Built with intention, crafted for 
 
 ## What This Is
 
-InboxShore is a demonstration of what happens when engineering meets empathy. It's a standalone product that shows how support software should feel—fast, accessible, and genuinely helpful. No external dependencies, no third-party API reliance. Just clean architecture and thoughtful design from the ground up.
+InboxShore is a demonstration of what happens when engineering meets empathy. It's a standalone product that shows how support software should feel, fast, accessible, and genuinely helpful. No external dependencies, no third-party API reliance. Just clean architecture and thoughtful design from the ground up.
 
-This project includes test messages from some of my favorite musicians—Lucy Dacus, Phoebe Bridgers, Sharon Van Etten, and Julien Baker—as an ode to art that moves you. Because good software, like good music, should make you feel something.
+This project includes test messages from some of my favorite musicians, Lucy Dacus, Phoebe Bridgers, Sharon Van Etten, and Julien Baker, as an ode to art that moves you. Because good software, like good music, should make you feel something.
 
 ## The Stack
 
@@ -106,111 +106,11 @@ Every choice here was deliberate:
 - Express over serverless: Sometimes you need a real server
 - TypeScript everywhere: Type safety is user safety
 
-## Deployment
-
-InboxShore uses a **hybrid deployment architecture** that separates the frontend and backend for optimal performance and scalability. This approach leverages the strengths of each platform while maintaining the clean separation of concerns in your application.
-
-### Architecture Overview
-
-```
-┌─────────────────┐    HTTPS/API     ┌──────────────────┐
-│   Vercel        │ ───────────────> │    Railway       │
-│   (Frontend)    │                  │   (Backend)      │
-│   Next.js App   │                  │  Express Server  │
-└─────────────────┘                  └──────────────────┘
-```
-
-**Why This Architecture?**
-
-The hybrid deployment strategy provides several key advantages. **Vercel excels at hosting Next.js applications** with features like automatic static optimization, edge caching, and seamless preview deployments. **Railway provides excellent containerized hosting** for your Express server with persistent storage, environment variable management, and automatic SSL termination.
-
-This separation allows your frontend to benefit from Vercel's global CDN while your backend runs as a dedicated service with consistent performance. The architecture also enables independent scaling and deployment cycles for each part of your application.
-
-### Live Application
-
-**🚀 Production URLs:**
-
-- **Frontend:** https://inbox-shore-git-deployment-alejandra-villas-projects-05dd66da.vercel.app
-- **Backend API:** https://inbox-shore-backend-production.up.railway.app/api
-- **API Health Check:** https://inbox-shore-backend-production.up.railway.app/api/api/health
-
-### Deploying Your Own Instance
-
-**Prerequisites:**
-
-- Vercel account (free tier available)
-- Railway account (free tier available)
-- Git repository with your code
-
-#### Step 1: Deploy Backend to Railway
-
-Railway deployment handles your Express server and provides the API endpoints your frontend needs.
-
-1. Connect your repository to Railway
-2. Configure environment variables in Railway dashboard:
-   ```
-   JWT_SECRET=your-secure-jwt-secret-32-chars-minimum
-   NODE_ENV=production
-   PORT=3001
-   ```
-3. Railway automatically builds and deploys your server from the `/server` directory
-4. Note your Railway app URL (format: `https://inbox-shore-backend-production.up.railway.app/api`)
-
-#### Step 2: Deploy Frontend to Vercel
-
-Vercel handles your Next.js frontend and API routes, connecting to your Railway backend.
-
-1. Connect your repository to Vercel
-2. Configure environment variables in Vercel dashboard:
-   ```
-   JWT_SECRET=same-secret-as-railway
-   NEXT_PUBLIC_API_URL=https://inbox-shore-backend-production.up.railway.app/api
-   NEXT_PUBLIC_USE_MOCK_API=false
-   NEXT_PUBLIC_API_BASE_URL=https://your-vercel-app.vercel.app/api
-   ```
-3. Vercel automatically builds and deploys your Next.js application
-
-#### Step 3: Verify Deployment
-
-Test the complete application flow to ensure both services communicate correctly:
-
-1. Visit your Vercel URL
-2. Log in using test credentials
-3. Create a support request
-4. Verify the request appears in your list
-5. Test the conversation interface
-
-### Environment Variables Explained
-
-Understanding how environment variables work across both platforms helps you maintain secure, flexible deployments:
-
-- `JWT_SECRET`: Must be identical on both platforms for authentication to work
-- `NEXT_PUBLIC_API_URL`: Tells your frontend where to find your backend API
-- `NEXT_PUBLIC_USE_MOCK_API`: Set to `false` in production to use real backend data
-- `NEXT_PUBLIC_API_BASE_URL`: Used for internal Next.js API routes
-
-### Deployment Commands (Alternative)
-
-If you prefer command-line deployment:
-
-```bash
-# Deploy backend to Railway
-cd server
-railway login
-railway init
-railway up
-
-# Deploy frontend to Vercel
-cd ..
-vercel login
-vercel --prod
-```
-
 ## What I Learned Building This
 
 InboxShore taught me that the best software is invisible. It's there when you need it, gone when you don't. It respects your time, your data, and your humanity.
 
-Good error handling isn't about catching errors—it's about helping people recover from them. Good performance isn't about milliseconds—it's about making interactions feel effortless. Good design isn't about beauty—it's about removing friction from human tasks.
+Good error handling isn't about catching errors, it's about helping people recover from them. Good performance isn't about milliseconds, it's about making interactions feel effortless. Good design isn't about beauty, it's about removing friction from human tasks.
 
 ## Contributing
 
